@@ -17,7 +17,7 @@ function setStage() {
   bgdec2.fixedToCamera = true;
   
 
-  back_emitter = game.add.emitter(game.world.width / 2, game.world.height / 2, 1000);
+  back_emitter = game.add.emitter(game.world.width / 2, game.world.height / 2, 5000);
 
   back_emitter.makeParticles('star');
   back_emitter.maxParticleScale = 0.6;
@@ -32,9 +32,9 @@ function setStage() {
   back_emitter.maxRotation = 0;
   // back_emitter.maxParticleSpeed = 25;
 
-  back_emitter.start(true, 180000, 20, 400);
+  back_emitter.start(true, 60000, 20, 3000);
 
-  fill_emitter = game.add.emitter(-30, game.world.height / 2, 1000);
+  fill_emitter = game.add.emitter(-30, game.world.height / 2, 5000);
 
   fill_emitter.makeParticles('star');
   fill_emitter.maxParticleScale = 0.6;
@@ -49,6 +49,6 @@ function setStage() {
   fill_emitter.maxRotation = 0;
   // fill_emitter.maxParticleSpeed = 25;
 
-  fill_emitter.start(false, 180000, 1500, 1000);
+  fill_emitter.start(false, 60000, 1500, 3000);
 }
   
