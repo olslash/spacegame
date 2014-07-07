@@ -19,6 +19,7 @@ var fill_emitter;
 var mothership;
 
 var mouseDown = false;
+var mouseOverButton = false;
 
 var signals = {
   mouseMarginLeft: new Phaser.Signal(),
@@ -77,7 +78,7 @@ function create() {
 }
 
 function update() {
-  if(mouseDown) { checkPointerAtScreenEdge(); } // check mouse for camera movement
+  if(mouseDown && !mouseOverButton) { checkPointerAtScreenEdge(); } // check mouse for camera movement
 }
 
 function render() {

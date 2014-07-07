@@ -34,9 +34,11 @@ var Button = function(sprite, x, y, action, text, show) {
   
   this.setInputOverListener(function(){
     game.add.tween(this.sprite.scale).to({x: 1.05, y: 1.05}, 50, Phaser.Easing.Quartic.In, true);
+    mouseOverButton = true;
   }); 
   this.setInputOutListener(function(){
     game.add.tween(this.sprite.scale).to({x: 1.0, y: 1.0}, 50, Phaser.Easing.Quartic.Out, true);
+    mouseOverButton = false;
   }); 
 
 };
