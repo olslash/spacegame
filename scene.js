@@ -32,7 +32,7 @@ function setStage() {
   back_emitter.maxRotation = 0;
   // back_emitter.maxParticleSpeed = 25;
 
-  back_emitter.start(true, 180000, 20, 3000);
+  // back_emitter.start(true, 180000, 20, 3000);
 
   fill_emitter = game.add.emitter(-30, game.world.height / 2, 5000);
 
@@ -49,6 +49,6 @@ function setStage() {
   fill_emitter.maxRotation = 0;
   // fill_emitter.maxParticleSpeed = 25;
 
-  fill_emitter.start(false, 180000, 3000, 3000);
+  fill_emitter.start(false, 180000, 80, 3000);
 }
   
