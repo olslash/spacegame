@@ -3,7 +3,7 @@
 
 function setStage() {
   game.stage.backgroundColor = '#000000';
-  background = game.add.tileSprite(0, 0, worldx * 2, worldy * 2, 'background');
+  background = game.add.tileSprite(0, 0, worldX * 2, worldY * 2, 'background');
   background.scale.setTo(0.5, 0.5);
   
   bgdec1 = game.add.sprite(-100, -200, 'hyperspace');

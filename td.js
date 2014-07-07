@@ -1,6 +1,6 @@
 var antialias = false;
 var screenX = 1020, screenY = 600;
-var worldx = 2048, worldy = 2048;
+var worldX = 2048, worldY = 2048;
 
 var game = new Phaser.Game(screenX, screenY, Phaser.AUTO, 'game', {
   preload: preload,
@@ -38,7 +38,7 @@ function preload() {
 }
 
 function create() {
-  game.world.setBounds(0, 0, worldx, worldy);
+  game.world.setBounds(0, 0, worldX, worldY);
 
   setStage();
 
@@ -46,10 +46,18 @@ function create() {
   game.scale.fullScreenScaleMode = Phaser.ScaleManager.NO_SCALE;
   // game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
 
-  mothership = game.add.sprite(worldx/2, worldy/2, 'mothership', 'mothership');
+  // ADD PLAYER BASE
+  mothership = game.add.sprite(worldX/2, worldY/2, 'mothership', 'mothership');
   mothership.anchor.set(0.5, 0.5);
   mothership.scale.setTo(0.5, 0.5);
   centerCameraOnSprite(mothership);
+
+  // ADD MENUS
+  var centerCamera = new Button('menu_bubble', screenX - 100, screenY - 50, 'CENTER CAMERA', true);
+
+
+
+
 
   // set up listeners for mouse events to handle camera control
   signals.mouseMarginLeft.add(moveCamera.left);
