@@ -1,4 +1,5 @@
 var Button = function(sprite, x, y, action, text, show) {
+  if (show === undefined) { show = true; }
 	this.sprite = game.add.sprite(x, y, sprite, 'buttons');
 
   this.sprite.anchor.setTo(0.5, 0.5);
@@ -10,6 +11,24 @@ var Button = function(sprite, x, y, action, text, show) {
 
   this._tweenSpeed = 200;
   if(show) { this.show(); }
+
+  this.text = game.add.text(x, y, text);
+
+  //  Center align
+  this.text.anchor.set(0.5);
+  this.text.align = 'center';
+
+  //  Font style
+  this.text.font = 'Arial';
+  this.text.fontSize = 12;
+  this.text.fontWeight = 'bold';
+
+  //  Stroke color and thickness
+  this.text.stroke = '#000000';
+  this.text.strokeThickness = 6;
+  this.text.fill = '#43d637';
+
+  this.text.fixedToCamera = true;
 
   this.setInputDownListener(action);
   

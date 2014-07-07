@@ -57,7 +57,7 @@ function create() {
   // ADD MENUS
   var centerCamera = new Button('menu_bubble', screenX - 100, screenY - 50, function() {
     centerCameraOnSprite(mothership);
-  },'CENTER CAMERA', true);
+  },'CENTER CAMERA');
 
 
   // hack in a mouse-down boolean
