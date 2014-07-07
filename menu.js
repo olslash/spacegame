@@ -1,4 +1,4 @@
-var Button = function(sprite, x, y, text, show) {
+var Button = function(sprite, x, y, action, text, show) {
 	this.sprite = game.add.sprite(x, y, sprite, 'buttons');
 
   this.sprite.anchor.setTo(0.5, 0.5);
@@ -10,6 +10,8 @@ var Button = function(sprite, x, y, text, show) {
 
   this._tweenSpeed = 200;
   if(show) { this.show(); }
+
+  this.setInputDownListener(action);
   
   this.setInputOverListener(function(){
     game.add.tween(this.sprite.scale).to({x: 1.05, y: 1.05}, 50, Phaser.Easing.Quartic.In, true);
@@ -17,6 +19,7 @@ var Button = function(sprite, x, y, text, show) {
   this.setInputOutListener(function(){
     game.add.tween(this.sprite.scale).to({x: 1.0, y: 1.0}, 50, Phaser.Easing.Quartic.Out, true);
   }); 
+
 };
 
 Button.prototype.setPosition = function(x, y) {

@@ -18,6 +18,8 @@ var fill_emitter;
 
 var mothership;
 
+var mouseDown = false;
+
 var signals = {
   mouseMarginLeft: new Phaser.Signal(),
   mouseMarginTop: new Phaser.Signal(),
@@ -53,11 +55,19 @@ function create() {
   centerCameraOnSprite(mothership);
 
   // ADD MENUS
-  var centerCamera = new Button('menu_bubble', screenX - 100, screenY - 50, 'CENTER CAMERA', true);
+  var centerCamera = new Button('menu_bubble', screenX - 100, screenY - 50, function() {
+    centerCameraOnSprite(mothership);
+  },'CENTER CAMERA', true);
 
 
+  // hack in a mouse-down boolean
+  game.input.onDown.add(function() {
+    mouseDown = true;
+  }, this);
 
-
+  game.input.onUp.add(function() {
+    mouseDown = false;
+  }, this);
 
   // set up listeners for mouse events to handle camera control
   signals.mouseMarginLeft.add(moveCamera.left);
@@ -67,7 +77,7 @@ function create() {
 }
 
 function update() {
-  checkPointerAtScreenEdge(); // check mouse
+  if(mouseDown) { checkPointerAtScreenEdge(); } // check mouse for camera movement
 }
 
 function render() {
