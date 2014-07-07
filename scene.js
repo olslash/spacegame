@@ -49,6 +49,6 @@ function setStage() {
   fill_emitter.maxRotation = 0;
   // fill_emitter.maxParticleSpeed = 25;
 
-  fill_emitter.start(false, 180000, 80, 3000);
+  // fill_emitter.start(false, 180000, 80, 3000);
 }
   

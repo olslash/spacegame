@@ -2,6 +2,9 @@ var antialias = false;
 var screenX = 1020, screenY = 600;
 var worldX = 2048, worldY = 2048;
 
+var total_res = 50;
+var resources = [];
+
 var game = new Phaser.Game(screenX, screenY, Phaser.AUTO, 'game', {
   preload: preload,
   create: create,
@@ -38,6 +41,11 @@ function preload() {
   game.load.image('beacon', 'assets/beacon.png');
   game.load.image('turret', 'assets/turret.png');
   game.load.image('mothership', 'assets/mothership.png');
+
+  game.load.image('asteroid1', 'assets/asteroids/asteroid1.png');
+  game.load.image('asteroid2', 'assets/asteroids/asteroid2.png');
+  game.load.image('asteroid3', 'assets/asteroids/asteroid3.png');
+  game.load.image('asteroid4', 'assets/asteroids/asteroid4.png');
 }
 
 function create() {
@@ -60,6 +68,20 @@ function create() {
     centerCameraOnSprite(mothership);
   },'CENTER CAMERA');
 
+  // THROW IN SOME RESOURCES
+  for (var i = total_res; i >= 0; i--) {
+    var randX = Math.floor(Math.random() * worldX);
+    var randY = Math.floor(Math.random() * worldY);
+    var radiusAroundMothership = 300;
+    if (randX > worldX / 2 - radiusAroundMothership 
+      && randX < worldX / 2 + radiusAroundMothership
+      && randY > worldY / 2 - radiusAroundMothership 
+      && randY < worldY / 2 + radiusAroundMothership) {
+      i++;
+    } else {
+      resources.push(new Resource('beacon', randX, randY));
+    }
+  }
 
   // hack in a mouse-down boolean
   game.input.onDown.add(function() {
