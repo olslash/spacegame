@@ -62,7 +62,11 @@ var createTurretButton;
 var explosions;
 var explosions_enemy;
 
+//db to store high scores
+var db = new DB();
+var score = 0;
 
+var loadingText;
 
 var signals = {
   mouseMarginLeft: new Phaser.Signal(),
@@ -72,6 +76,9 @@ var signals = {
 };
 
 function preload() {
+  // LOADING TEXT
+
+
   game.load.image('background', 'assets/blackbg.png');
   game.load.image('hyperspace', 'assets/starsector/hyperspace1.png');
   game.load.image('hyperspace2', 'assets/starsector/hyperspace2.png');
@@ -205,7 +212,8 @@ function create() {
 
 
 
-
+  // get rid of the loading text
+  $('.loading').hide();
 
   // TESTING DANGERZONE
 
