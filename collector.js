@@ -7,7 +7,7 @@ var Collector = function(sprite, x, y) {
   this.rangeScale = 1; // collector can get at resources if:
                     //a) it is within <radius> of that resource
                     //b) it is within <radius> of another collector, or a relay
-  this.radius = this.rangeScale * 250; // the sprite is 250px, so we have a range in pixels now. 
+  this.radius = this.rangeScale * 150; // who knows why this works
   game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
   
   this.line = new Phaser.Line();
@@ -46,6 +46,9 @@ var Collector = function(sprite, x, y) {
 Collector.prototype.tick = function() {
   if(this.state === 0) { //PLACING
     // move with the mouse
+    // 
+    // TODO: do this with a Phaser.Circle instead, what were you thinking
+    // 
     this.sprite.x = game.input.worldX;
     this.sprite.y = game.input.worldY;
 
@@ -73,7 +76,7 @@ Collector.prototype.tick = function() {
         && game.physics.arcade.distanceBetween(this.sprite, resources[i].sprite) <= this.radius) {
         // console.log('mining from', resources[i]);
         player.addRes(resources[i].mineRes(collector_rate));
-        
+
         this.line.start = new Phaser.Point(this.sprite.x, this.sprite.y);
         this.line.end = new Phaser.Point(resources[i].sprite.x, resources[i].sprite.y);
       }

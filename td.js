@@ -14,9 +14,13 @@ var collectors = []; // all resource collectors placed in the game world
 
 var turrets = []; // all turrets placed in the game world
 
+var missiles = []; // all missiles fired in the game world
+
 var enemies = []; // all enemies placed in the game world
+var enemySprites = []; // all enemy sprites, for collision checking
+
 var time_between_enemy_waves = 3000;
-var enemies_per_wave = 3;
+var enemies_per_wave = 1;
 
 var waveTimerSet = true; // do we currently have a setTimeout running for waves?
                          // set to false after player places first unit, to kick
@@ -47,6 +51,9 @@ var mouseOverButton = false;
 var createCollectorButton;
 var createTurretButton;
 
+var testMissile;
+
+
 var signals = {
   mouseMarginLeft: new Phaser.Signal(),
   mouseMarginTop: new Phaser.Signal(),
@@ -56,24 +63,25 @@ var signals = {
 
 function preload() {
   game.load.image('background', 'assets/blackbg.png');
-  game.load.image('hyperspace', 'assets/starsector/hyperspace1.png');
-  game.load.image('hyperspace2', 'assets/starsector/hyperspace2.png');
-  game.load.image('star', 'assets/star.png');
-  game.load.image('menu_bubble', 'assets/menu_bubble.png');
+  // game.load.image('hyperspace', 'assets/starsector/hyperspace1.png');
+  // game.load.image('hyperspace2', 'assets/starsector/hyperspace2.png');
+  // game.load.image('star', 'assets/star.png');
+  // game.load.image('menu_bubble', 'assets/menu_bubble.png');
 
-  game.load.image('beacon', 'assets/nav_buoy.png');
-  game.load.image('enemy', 'assets/fighter_heavy_escort_strike.png');
+  // game.load.image('beacon', 'assets/nav_buoy.png');
+  // game.load.image('enemy', 'assets/fighter_heavy_escort_strike.png');
 
   game.load.image('turret', 'assets/station_small_base.png');
   game.load.image('cannon', 'assets/autopulse_laser_hardpoint_base.png');
+  game.load.image('missile', 'assets/missile_harpoon.png');
   // game.load.image('mothership', 'assets/mothership.png');
-  game.load.image('mothership', 'assets/station_small_full_c.png');
-  game.load.image('radius', 'assets/radius.png');
+  // game.load.image('mothership', 'assets/station_small_full_c.png');
+  // game.load.image('radius', 'assets/radius.png');
 
-  game.load.image('asteroid1', 'assets/asteroids/asteroid1.png');
-  game.load.image('asteroid2', 'assets/asteroids/asteroid2.png');
-  game.load.image('asteroid3', 'assets/asteroids/asteroid3.png');
-  game.load.image('asteroid4', 'assets/asteroids/asteroid4.png');
+  // game.load.image('asteroid1', 'assets/asteroids/asteroid1.png');
+  // game.load.image('asteroid2', 'assets/asteroids/asteroid2.png');
+  // game.load.image('asteroid3', 'assets/asteroids/asteroid3.png');
+  // game.load.image('asteroid4', 'assets/asteroids/asteroid4.png');
 }
 
 function create() {
@@ -147,6 +155,23 @@ function create() {
   signals.mouseMarginRight.add(moveCamera.right);
   signals.mouseMarginTop.add(moveCamera.up);
   signals.mouseMarginBottom.add(moveCamera.down);
+
+
+
+
+
+
+  // TESTING DANGERZONE
+  // testMissile = new Missile('missile', 1000, 1000);
+  // testMissile.launch(40);
+
+
+
+
+
+
+
+
 }
 
 function update() {
@@ -203,17 +228,25 @@ function update() {
   for(var i = enemies.length - 1; i >=0; i--) {
     enemies[i].tick();
   }
+
+  // update every missile (enemy tracking)
+  for (var i = missiles.length - 1; i >= 0; i--) {
+    missiles[i].tick();
+  };
   
 
 }
 
 function render() {
-  turrets.forEach(function(turret) {
-    turret.debug();
-  });
-  collectors.forEach(function(collector) {
-    collector.debug();
-  });
+  for (var i = turrets.length - 1; i >= 0; i--) {
+    turrets[i].debug();
+  }
+
+  for (var i = collectors.length - 1; i >= 0; i--) {
+    collectors[i].debug();
+  }
+
+
   // game.debug.cameraInfo(game.camera, 32, 32);
   // game.debug.pointer(game.input.activePointer);
 }

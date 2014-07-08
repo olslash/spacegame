@@ -9,6 +9,7 @@ var Enemy = function(sprite, x, y) {
   this.sprite.autoCull = false;
   // this.sprite.inputEnabled = true;
   this.target = this.chooseTarget();
+  enemySprites.push(this.sprite);
 };
 
 Enemy.prototype.chooseTarget = function() {
@@ -49,10 +50,8 @@ Enemy.prototype.chooseTarget = function() {
     if (choice === 0) { return turrets[turretSelection]; }
     if (choice === 1) { return collectors[collectorSelection]; }
   } else if (turretSelection !== undefined) {
-    console.log('turret', turretSelection);
     return turrets[turretSelection];
   } else if (collectorSelection !== undefined) {
-    console.log('collector', collectorSelection);
     return collectors[collectorSelection];
   } else {
     console.log('a bad thing happened');
@@ -63,5 +62,4 @@ Enemy.prototype.tick = function() {
   // accelerate towards this.target
   // accelerateToObject(displayObject, destination, speed, xSpeedMax, ySpeedMax)
   this.sprite.rotation = game.physics.arcade.accelerateToObject(this.sprite, this.target.sprite, 150, 200, 200);
-
 };
