@@ -1,7 +1,7 @@
 // a Turret is a tower that defends from enemies
 // STATES: 0: placing, 1: working
 var Turret = function(sprite, x, y) {
-  this.range = 500; // gun range
+  this.range = 800; // gun range
   this.fireRate = 40; // divide by ~60 for time in seconds
   this.lastFire = 0;
 

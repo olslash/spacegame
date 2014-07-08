@@ -13,22 +13,26 @@ var Missile = function(x, y) {
 
 Missile.prototype.launch = function(enemy) {
   this.enemy = enemy;
-  this.trackingTime = 120; // divide by ~60 for seconds
+  this.trackingTime = 60; // divide by ~60 for seconds
   // this.sprite.rotation = game.physics.arcade.moveToObject(this.sprite, this.enemy.sprite, 400);
-  this.sprite.rotation = game.physics.arcade.accelerateToObject(this.sprite, this.enemy.sprite, 600, 800, 800);
-  //todo: these need better accuracy -- back to moveto?
+  this.sprite.rotation = game.physics.arcade.accelerateToObject(this.sprite, this.enemy.sprite, 800, 600, 600);
 };
 
 
 Missile.prototype.tick = function() {
   if(this.trackingTime > 0) {
     this.trackingTime--;
-    this.sprite.rotation = game.physics.arcade.accelerateToObject(this.sprite, this.enemy.sprite, 400, 800, 800);
+    this.sprite.rotation = game.physics.arcade.accelerateToObject(this.sprite, this.enemy.sprite, 5000, 600, 600);
   }
 
   game.physics.arcade.overlap(this.sprite, enemySprites, function(self, enemy) {
-    // todo: explosion!
+    var explosionAnimation = explosions.getFirstExists(false);
+
+    explosionAnimation.reset(self.x, self.y);
+    explosionAnimation.play('kaboom', 30, false, true);
+
     self.exists = false;
     enemy.exists = false;
+    
   });
 };

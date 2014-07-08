@@ -51,7 +51,8 @@ var mouseOverButton = false;
 var createCollectorButton;
 var createTurretButton;
 
-var testMissile;
+var explosions;
+
 
 
 var signals = {
@@ -74,6 +75,9 @@ function preload() {
   game.load.image('turret', 'assets/station_small_base.png');
   game.load.image('cannon', 'assets/autopulse_laser_hardpoint_base.png');
   game.load.image('missile', 'assets/missile_harpoon.png');
+
+  game.load.spritesheet('kaboom', 'assets/explosion.png', 64, 64, 23);
+
 
   // game.load.image('mothership', 'assets/station_small_full_c.png');
   // game.load.image('radius', 'assets/radius.png');
@@ -150,6 +154,19 @@ function create() {
     mouseDown = false;
   }, this);
 
+//  Explosion pool -- http://examples.phaser.io/_site/view_full.html?d=games&f=tanks.js&t=tanks
+   explosions = game.add.group();
+
+   for (var i = 0; i < 10; i++)
+   {
+       var explosionAnimation = explosions.create(0, 0, 'kaboom', [0], false);
+       explosionAnimation.anchor.setTo(0.5, 0.5);
+       explosionAnimation.scale.setTo(4, 4);
+       explosionAnimation.animations.add('kaboom');
+   }
+
+
+
   // set up listeners for mouse events to handle camera control
   signals.mouseMarginLeft.add(moveCamera.left);
   signals.mouseMarginRight.add(moveCamera.right);
@@ -162,8 +179,6 @@ function create() {
 
 
   // TESTING DANGERZONE
-  // testMissile = new Missile('missile', 1000, 1000);
-  // testMissile.launch(40);
 
 
 
