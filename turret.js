@@ -12,7 +12,6 @@ var Turret = function(sprite, x, y) {
   game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
   
   this.state = 0; //'placing';
-  this.sprite.autoCull = false;
   this.sprite.inputEnabled = true;
 
   turretSprites.push(this.sprite);
@@ -33,7 +32,6 @@ var Turret = function(sprite, x, y) {
     // this.gun.exists = false;
 
     this.range = new Phaser.Circle(this.sprite.x, this.sprite.y, this.gunrange);
-
   });
 };
 

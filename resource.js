@@ -6,8 +6,7 @@ var Resource = function(x, y) {
   var res = Math.floor(Math.random() * 400);
   this.res = res;
 
-
-  this.text = game.add.text(x, y - 45, '');
+  this.text = game.add.text(x, y - 45, ''); // resource remaining label
 
   //  Center align
   this.text.anchor.set(0.5);
@@ -74,9 +73,7 @@ Resource.prototype.mineRes = function(amt) {
 };
 
 Resource.prototype.tick = function() {
-  // if(this.state === 0) { // has resources
 
-  // }
 };
 
 Resource.prototype.setInputOverListener = function(action) {

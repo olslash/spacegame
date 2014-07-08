@@ -47,6 +47,9 @@ var background;
 var back_emitter;
 var fill_emitter;
 
+//SPACE JUNK
+var junk_thrower;
+
 var mothership;
 
 var mouseDown = false;
@@ -93,6 +96,16 @@ function preload() {
   game.load.image('asteroid2', 'assets/asteroids/asteroid2.png');
   game.load.image('asteroid3', 'assets/asteroids/asteroid3.png');
   game.load.image('asteroid4', 'assets/asteroids/asteroid4.png');
+
+  game.load.image('debris_lrg0', 'assets/debris/debris_lrg0.png');  
+  game.load.image('debris_lrg1', 'assets/debris/debris_lrg1.png');  
+  game.load.image('debris_med0', 'assets/debris/debris_med0.png');  
+  game.load.image('debris_med1', 'assets/debris/debris_med1.png');  
+  game.load.image('debris_med2', 'assets/debris/debris_med2.png');  
+  game.load.image('debris_sml0', 'assets/debris/debris_sml1.png');  
+  game.load.image('debris_sml1', 'assets/debris/debris_sml1.png');  
+  game.load.image('debris_sml2', 'assets/debris/debris_sml2.png');  
+  game.load.image('debris_sml3', 'assets/debris/debris_sml3.png');  
 }
 
 function create() {
@@ -222,6 +235,11 @@ function update() {
     // console.log(time_between_enemy_waves);
   }
 
+  // update every resource (only for visual effect)
+  for (var i = resources.length - 1; i >= 0; i--) {
+    resources[i].tick();
+  }
+
 
   // update every collector-
   for(var i = collectors.length - 1; i >= 0; i--) {
@@ -293,6 +311,9 @@ function update() {
   
   // rotate the mothership
   mothership.rotation = game.math.wrapAngle(mothership.rotation + 0.001, true);
+
+  // toss out some spacejunk
+  junk_thrower.tick();
 }
 
 function render() {

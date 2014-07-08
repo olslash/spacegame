@@ -5,7 +5,7 @@ var Missile = function(x, y) {
   // this.sprite.scale.setTo(3,3);
 
   game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
-  this.sprite.autoCull = true;  
+  // this.sprite.autoCull = true;  
 
   this.trackingTime = 0; 
   missiles.push(this); // add to global missiles array
@@ -59,6 +59,8 @@ EnemyMissile.prototype.tick = function() {
     var explosionAnimation = explosions_enemy.getFirstExists(false);
 
     explosionAnimation.reset(self.x, self.y);
+    // explosionAnimation.bringToTop();
+    // explosionAnimation.z = 100;
     explosionAnimation.play('kaboom_enemy', 30, false, true);
 
     self.exists = false;
@@ -67,8 +69,9 @@ EnemyMissile.prototype.tick = function() {
 
   game.physics.arcade.overlap(this.sprite, turretSprites, function(self, enemy) {
     var explosionAnimation = explosions_enemy.getFirstExists(false);
-
     explosionAnimation.reset(self.x, self.y);
+    // explosionAnimation.bringToTop();
+    // explosionAnimation.z = 100;
     explosionAnimation.play('kaboom_enemy', 30, false, true);
 
     self.exists = false;
