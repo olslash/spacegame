@@ -61,9 +61,13 @@ function preload() {
   game.load.image('star', 'assets/star.png');
   game.load.image('menu_bubble', 'assets/menu_bubble.png');
 
-  game.load.image('beacon', 'assets/beacon.png');
-  game.load.image('turret', 'assets/turret.png');
-  game.load.image('mothership', 'assets/mothership.png');
+  game.load.image('beacon', 'assets/nav_buoy.png');
+  game.load.image('enemy', 'assets/fighter_heavy_escort_strike.png');
+
+  game.load.image('turret', 'assets/station_small_base.png');
+  game.load.image('cannon', 'assets/autopulse_laser_hardpoint_base.png');
+  // game.load.image('mothership', 'assets/mothership.png');
+  game.load.image('mothership', 'assets/station_small_full_c.png');
   game.load.image('radius', 'assets/radius.png');
 
   game.load.image('asteroid1', 'assets/asteroids/asteroid1.png');
@@ -89,7 +93,7 @@ function create() {
   // ADD PLAYER BASE
   mothership = game.add.sprite(worldX/2, worldY/2, 'mothership', 'mothership');
   mothership.anchor.set(0.5, 0.5);
-  mothership.scale.setTo(0.5, 0.5);
+  mothership.scale.setTo(1, 1);
   mothership.inputEnabled = true;
   mothership.events.onInputDown.add(goFull);
   centerCameraOnSprite(mothership);
@@ -188,7 +192,7 @@ function update() {
     waveTimerSet = true;
     window.setTimeout(function() {
       for(var i = enemies_per_wave - 1; i >= 0; i--) {
-        enemies.push(new Enemy(0,0));
+        enemies.push(new Enemy('enemy', 0,0));
         // console.log('spawning an enemy');
         waveTimerSet = false;
       }

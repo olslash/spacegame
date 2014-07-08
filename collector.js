@@ -3,7 +3,7 @@
 var Collector = function(sprite, x, y) {
   this.sprite = game.add.sprite(x, y, sprite, 'collectors');
   this.sprite.anchor.setTo(0.5, 0.5);
-  this.sprite.scale.setTo(3, 3);
+  this.sprite.scale.setTo(1, 1);
   this.rangeScale = 1; // collector can get at resources if:
                     //a) it is within <radius> of that resource
                     //b) it is within <radius> of another collector, or a relay
@@ -52,7 +52,7 @@ Collector.prototype.tick = function() {
     // if i'm being placed, i should be checking for asteroids in range.
     this.range.tint = 0xff0000;
     this.validPosition = false; 
-    
+
     game.physics.arcade.overlap(this.range, resourceSprites, function(){
       this.validPosition = true;
       this.range.tint = 0x00ff00;

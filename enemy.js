@@ -1,7 +1,7 @@
 var Enemy = function(sprite, x, y) {
   this.sprite = game.add.sprite(x, y, sprite, 'turrets');
   this.sprite.anchor.setTo(0.5, 0.5);
-  this.sprite.scale.setTo(4, 4);
+  this.sprite.scale.setTo(0.75, 0.75);
 
   game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
   
@@ -9,7 +9,6 @@ var Enemy = function(sprite, x, y) {
   this.sprite.autoCull = false;
   // this.sprite.inputEnabled = true;
   this.target = this.chooseTarget();
-  console.log('selected', this.target);
 };
 
 Enemy.prototype.chooseTarget = function() {
@@ -61,5 +60,8 @@ Enemy.prototype.chooseTarget = function() {
 };
 
 Enemy.prototype.tick = function() {
-  // accelerate towards a thing
+  // accelerate towards this.target
+  // accelerateToObject(displayObject, destination, speed, xSpeedMax, ySpeedMax)
+  this.sprite.rotation = game.physics.arcade.accelerateToObject(this.sprite, this.target.sprite, 150, 200, 200);
+
 };

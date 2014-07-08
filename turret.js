@@ -3,7 +3,7 @@
 var Turret = function(sprite, x, y) {
   this.sprite = game.add.sprite(x, y, sprite, 'turrets');
   this.sprite.anchor.setTo(0.5, 0.5);
-  this.sprite.scale.setTo(4, 4);
+  this.sprite.scale.setTo(0.15, 0.15);
 
   game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
   
@@ -14,11 +14,16 @@ var Turret = function(sprite, x, y) {
 
   this.setInputDownListener(function() {
     // on click, during placing, unit is placed.
+
     this.sprite.events.onInputDown = null;
 
     this.state = 1; // transition to working state
     this.sprite.inputEnabled = false;
     this.sprite.body.immovable = true;
+
+    this.gun = game.add.sprite(this.sprite.x, this.sprite.y, 'cannon', 'turrets');
+    this.gun.anchor.setTo(0.5, 0.8);
+    this.gun.scale.setTo(0.75, 0.75);
   });
 };
 
