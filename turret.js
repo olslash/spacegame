@@ -1,6 +1,8 @@
 // a Turret is a tower that defends from enemies
 // STATES: 0: placing, 1: working
 var Turret = function(sprite, x, y) {
+  this.range = 500; // gun range
+
   this.sprite = game.add.sprite(x, y, sprite, 'turrets');
   this.sprite.anchor.setTo(0.5, 0.5);
   this.sprite.scale.setTo(0.15, 0.15);
@@ -24,6 +26,9 @@ var Turret = function(sprite, x, y) {
     this.gun = game.add.sprite(this.sprite.x, this.sprite.y, 'cannon', 'turrets');
     this.gun.anchor.setTo(0.5, 0.8);
     this.gun.scale.setTo(0.75, 0.75);
+
+    this.range = new Phaser.Circle(this.sprite.x, this.sprite.y, this.range);
+
   });
 };
 
@@ -33,7 +38,7 @@ Turret.prototype.tick = function() {
     this.sprite.x = game.input.worldX;
     this.sprite.y = game.input.worldY;
   } else if (this.state === 1) { //WORKING
-    // find enemies and kill them
+    // which enemies are in my range?
     
   }
 };
@@ -46,4 +51,8 @@ Turret.prototype.setInputDownListener = function(action) {
     } else { throw new Error('Turret down listener expected an action'); }
     
   }, this);
+};
+
+Turret.prototype.debug = function() {
+  game.debug.geom(this.range, 0xffffff, false);
 };

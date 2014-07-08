@@ -10,6 +10,9 @@ var Collector = function(sprite, x, y) {
   this.radius = this.rangeScale * 250; // the sprite is 250px, so we have a range in pixels now. 
   game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
   
+  this.line = new Phaser.Line();
+  this.line.start = new Phaser.Point(this.sprite.x, this.sprite.y);
+
   this.state = 0; //'placing';
   this.sprite.autoCull = false;
   this.sprite.inputEnabled = true;
@@ -68,9 +71,11 @@ Collector.prototype.tick = function() {
     for(var i = resources.length - 1; i >= 0; i--) {
       if(resources[i].state === 0 
         && game.physics.arcade.distanceBetween(this.sprite, resources[i].sprite) <= this.radius) {
-        // console.log(resources[i]);
-        player.addRes(resources[i].mineRes(collector_rate));
         // console.log('mining from', resources[i]);
+        player.addRes(resources[i].mineRes(collector_rate));
+        
+        this.line.start = new Phaser.Point(this.sprite.x, this.sprite.y);
+        this.line.end = new Phaser.Point(resources[i].sprite.x, resources[i].sprite.y);
       }
       game.physics.arcade.distanceBetween(this.sprite, resources[0].sprite);
     }
@@ -85,4 +90,8 @@ Collector.prototype.setInputDownListener = function(action) {
     } else { throw new Error('Collector down listener expected an action'); }
     
   }, this);
+};
+
+Collector.prototype.debug = function() {
+  game.debug.geom(this.line, 0xffffff);
 };

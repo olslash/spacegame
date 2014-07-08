@@ -3,7 +3,7 @@ var screenX = 1020, screenY = 600;
 var worldX = 2048, worldY = 2048;
 
 var collector_cost = 100;
-var collector_rate = 0.01;
+var collector_rate = 0.05;
 var turret_cost = 150;
 
 var total_res = 50;
@@ -208,6 +208,12 @@ function update() {
 }
 
 function render() {
+  turrets.forEach(function(turret) {
+    turret.debug();
+  });
+  collectors.forEach(function(collector) {
+    collector.debug();
+  });
   // game.debug.cameraInfo(game.camera, 32, 32);
   // game.debug.pointer(game.input.activePointer);
 }
