@@ -52,6 +52,7 @@ Collector.prototype.tick = function() {
     // if i'm being placed, i should be checking for asteroids in range.
     this.range.tint = 0xff0000;
     this.validPosition = false; 
+    
     game.physics.arcade.overlap(this.range, resourceSprites, function(){
       this.validPosition = true;
       this.range.tint = 0x00ff00;

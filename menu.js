@@ -105,11 +105,11 @@ Button.prototype.show = function() {
 };
 
 Button.prototype.hide = function() {
-
+  this.text.fontSize = 0;
   var tween = game.add.tween(this.sprite.scale).to({x: 0, y: 0}, this._tweenSpeed, Phaser.Easing.Quartic.Out, true);
   tween.onComplete.add(function() {
     this.sprite.exists = false;
-    this.text.fontSize = 0;
+
   }, this);
 };
 

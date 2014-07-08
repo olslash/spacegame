@@ -3,7 +3,7 @@
 var Turret = function(sprite, x, y) {
   this.sprite = game.add.sprite(x, y, sprite, 'turrets');
   this.sprite.anchor.setTo(0.5, 0.5);
-  this.sprite.scale.setTo(3, 3);
+  this.sprite.scale.setTo(4, 4);
 
   game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
   

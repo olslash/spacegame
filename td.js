@@ -14,8 +14,16 @@ var collectors = []; // all resource collectors placed in the game world
 
 var turrets = []; // all turrets placed in the game world
 
-var player;
+var enemies = []; // all enemies placed in the game world
+var time_between_enemy_waves = 3000;
+var enemies_per_wave = 3;
 
+var waveTimerSet = true; // do we currently have a setTimeout running for waves?
+                         // set to false after player places first unit, to kick
+                         // off enemy waves.
+var firstPlacement = true;  // this boolean facilitates that
+
+var player;
 
 var game = new Phaser.Game(screenX, screenY, Phaser.AUTO, 'game', {
   preload: preload,
@@ -73,6 +81,7 @@ function create() {
   game.scale.fullScreenScaleMode = Phaser.ScaleManager.NO_SCALE;
   // game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
 
+
   // ADD PLAYER OBJECT
   player = new Player();
 
@@ -81,6 +90,8 @@ function create() {
   mothership = game.add.sprite(worldX/2, worldY/2, 'mothership', 'mothership');
   mothership.anchor.set(0.5, 0.5);
   mothership.scale.setTo(0.5, 0.5);
+  mothership.inputEnabled = true;
+  mothership.events.onInputDown.add(goFull);
   centerCameraOnSprite(mothership);
 
   // ADD MENUS
@@ -137,6 +148,15 @@ function create() {
 function update() {
   if(mouseDown && !mouseOverButton) { checkPointerAtScreenEdge(); } // check mouse for camera movement
 
+  // wait until player places a unit before kicking off enemy waves
+  if(firstPlacement) {
+    if(collectors.length > 0 || turrets.length > 0) {
+      firstPlacement = false;
+      waveTimerSet = false;
+    }
+  }
+
+
   // update every collector-
   for(var i = collectors.length - 1; i >= 0; i--) {
     collectors[i].tick();
@@ -162,6 +182,24 @@ function update() {
   } else if (player.checkRes() < turret_cost && createTurretButton.sprite.exists === true) {
     createTurretButton.hide();
   }
+
+  // spawn enemy waves
+  if(!waveTimerSet) {
+    waveTimerSet = true;
+    window.setTimeout(function() {
+      for(var i = enemies_per_wave - 1; i >= 0; i--) {
+        enemies.push(new Enemy(0,0));
+        // console.log('spawning an enemy');
+        waveTimerSet = false;
+      }
+    }, time_between_enemy_waves);
+  }
+
+  // update every enemy
+  for(var i = enemies.length - 1; i >=0; i--) {
+    enemies[i].tick();
+  }
+  
 
 }
 
