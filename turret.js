@@ -1,7 +1,7 @@
 // a Turret is a tower that defends from enemies
 // STATES: 0: placing, 1: working
 var Turret = function(sprite, x, y) {
-  this.range = 800; // gun range
+  this.gunrange = 800; // gun range
   this.fireRate = 40; // divide by ~60 for time in seconds
   this.lastFire = 0;
 
@@ -31,7 +31,7 @@ var Turret = function(sprite, x, y) {
 
     // this.gun.exists = false;
 
-    this.range = new Phaser.Circle(this.sprite.x, this.sprite.y, this.range);
+    this.range = new Phaser.Circle(this.sprite.x, this.sprite.y, this.gunrange);
 
   });
 };
@@ -56,6 +56,7 @@ Turret.prototype.tick = function() {
       if(enemies[i].sprite.exists === true) {
         if(this.range.contains(enemies[i].sprite.x, enemies[i].sprite.y)) {
           // turn the gun towards that enemy
+          // TODO: why does the gun point at a different enemy than I fire at?
           var gunAngle = game.physics.arcade.angleBetween(this.sprite, enemies[i].sprite);
           this.gun.rotation = gunAngle + (0.5 * Math.PI); // 90 degree offset
           this.launchMissile(enemies[i]);

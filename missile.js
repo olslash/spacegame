@@ -13,7 +13,7 @@ var Missile = function(x, y) {
 
 Missile.prototype.launch = function(enemy) {
   this.enemy = enemy;
-  this.trackingTime = 60; // divide by ~60 for seconds
+  this.trackingTime = 40; // divide by ~60 for seconds
   // this.sprite.rotation = game.physics.arcade.moveToObject(this.sprite, this.enemy.sprite, 400);
   this.sprite.rotation = game.physics.arcade.accelerateToObject(this.sprite, this.enemy.sprite, 800, 600, 600);
 };
@@ -22,7 +22,9 @@ Missile.prototype.launch = function(enemy) {
 Missile.prototype.tick = function() {
   if(this.trackingTime > 0) {
     this.trackingTime--;
-    this.sprite.rotation = game.physics.arcade.accelerateToObject(this.sprite, this.enemy.sprite, 5000, 600, 600);
+    if(this.enemy.sprite.exists) {
+      this.sprite.rotation = game.physics.arcade.accelerateToObject(this.sprite, this.enemy.sprite, 5000, 600, 600);
+    }
   }
 
   game.physics.arcade.overlap(this.sprite, enemySprites, function(self, enemy) {

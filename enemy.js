@@ -5,6 +5,13 @@ var Enemy = function(sprite, x, y) {
 
   game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
   
+  this.gunrange = 400; // gun range
+  this.fireRate = 40; // divide by ~60 for time in seconds
+  this.lastFire = 0;
+
+  this.range = new Phaser.Circle(this.sprite.x, this.sprite.y, this.gunrange);
+
+
   this.state = 0; //'placing';
   this.sprite.autoCull = false;
   // this.sprite.inputEnabled = true;
@@ -58,12 +65,33 @@ Enemy.prototype.chooseTarget = function() {
   }
 };
 
+Enemy.prototype.launchMissile = function(target) {
+  if(this.lastFire >= this.fireRate) {
+    this.lastFire = 0;
+    new Missile(this.sprite.x, this.sprite.y).launch(target);
+  }
+};
+
 Enemy.prototype.tick = function() {
+  // update the firing timer
+  this.lastFire++;
+
+  // update the range circle
+  this.range.x = this.sprite.x;
+  this.range.y = this.sprite.y;
+
   // accelerate towards this.target
-  // accelerateToObject(displayObject, destination, speed, xSpeedMax, ySpeedMax)
   this.sprite.rotation = 
   game.physics.arcade.accelerateToObject(this.sprite, this.target.sprite, 50, 100, 100) 
   - (0.5 * Math.PI); // rotate 90 degrees to face.
+  
+  // fire missiles if in range
+    if(this.target.sprite.exists === true) {
+      if(this.range.contains(this.target.sprite.x, this.target.sprite.y)) {
+        //try to launch
+        this.launchMissile(this.target);
+      }
+    }
 
   // todo: fire misiles at the target.
 };

@@ -69,12 +69,12 @@ function preload() {
   // game.load.image('star', 'assets/star.png');
   // game.load.image('menu_bubble', 'assets/menu_bubble.png');
 
-  game.load.image('beacon', 'assets/nav_buoy.png');
-  game.load.image('enemy', 'assets/fighter_heavy_escort_strike.png');
+  // game.load.image('beacon', 'assets/nav_buoy.png');
+  // game.load.image('enemy', 'assets/fighter_heavy_escort_strike.png');
 
-  game.load.image('turret', 'assets/station_small_base.png');
-  game.load.image('cannon', 'assets/autopulse_laser_hardpoint_base.png');
-  game.load.image('missile', 'assets/missile_harpoon.png');
+  // game.load.image('turret', 'assets/station_small_base.png');
+  // game.load.image('cannon', 'assets/autopulse_laser_hardpoint_base.png');
+  // game.load.image('missile', 'assets/missile_harpoon.png');
 
   game.load.spritesheet('kaboom', 'assets/explosion.png', 64, 64, 23);
 
