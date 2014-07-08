@@ -11,8 +11,11 @@ var resources = []; // all asteroids in the game world
 var resourceSprites = []; // all asteroid sprites, for collision checking
 
 var collectors = []; // all resource collectors placed in the game world
+var collectorSprites = []; // all collector sprites, for collision checking enemy missiles
+
 
 var turrets = []; // all turrets placed in the game world
+var turretSprites = []; // all turret sprites, for collision checking enemy missiles
 
 var missiles = []; // all missiles fired in the game world
 

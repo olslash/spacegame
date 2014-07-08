@@ -26,6 +26,8 @@ var Collector = function(sprite, x, y) {
   this.range.tint = 0x00ff00;
   this.validPosition = false;
 
+  collectorSprites.push(this.sprite);
+
   this.setInputDownListener(function() {
     // on click, during placing, unit is placed.
     if(!this.validPosition) {

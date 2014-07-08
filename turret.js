@@ -15,6 +15,7 @@ var Turret = function(sprite, x, y) {
   this.sprite.autoCull = false;
   this.sprite.inputEnabled = true;
 
+  turretSprites.push(this.sprite);
 
   this.setInputDownListener(function() {
     // on click, during placing, unit is placed.

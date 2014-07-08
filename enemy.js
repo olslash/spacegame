@@ -68,30 +68,30 @@ Enemy.prototype.chooseTarget = function() {
 Enemy.prototype.launchMissile = function(target) {
   if(this.lastFire >= this.fireRate) {
     this.lastFire = 0;
-    new Missile(this.sprite.x, this.sprite.y).launch(target);
+    new EnemyMissile(this.sprite.x, this.sprite.y).launch(target);
   }
 };
 
 Enemy.prototype.tick = function() {
-  // update the firing timer
-  this.lastFire++;
+  if(this.sprite.exists) {
+    // update the firing timer
+    this.lastFire++;
 
-  // update the range circle
-  this.range.x = this.sprite.x;
-  this.range.y = this.sprite.y;
+    // update the range circle
+    this.range.x = this.sprite.x;
+    this.range.y = this.sprite.y;
 
-  // accelerate towards this.target
-  this.sprite.rotation = 
-  game.physics.arcade.accelerateToObject(this.sprite, this.target.sprite, 50, 100, 100) 
-  - (0.5 * Math.PI); // rotate 90 degrees to face.
-  
-  // fire missiles if in range
-    if(this.target.sprite.exists === true) {
-      if(this.range.contains(this.target.sprite.x, this.target.sprite.y)) {
-        //try to launch
-        this.launchMissile(this.target);
+    // accelerate towards this.target
+    this.sprite.rotation = 
+    game.physics.arcade.accelerateToObject(this.sprite, this.target.sprite, 50, 100, 100) 
+    - (0.5 * Math.PI); // rotate 90 degrees to face.
+    
+    // fire missiles if in range AND i exist still
+      if(this.target.sprite.exists === true) {
+        if(this.range.contains(this.target.sprite.x, this.target.sprite.y)) {
+          //try to launch
+          this.launchMissile(this.target);
+        }
       }
-    }
-
-  // todo: fire misiles at the target.
+  }
 };

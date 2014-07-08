@@ -38,3 +38,41 @@ Missile.prototype.tick = function() {
     
   });
 };
+
+
+var EnemyMissile = function(x, y) {
+  Missile.call(this, x, y);
+};
+
+EnemyMissile.prototype = Object.create(Missile.prototype);
+EnemyMissile.constructor = EnemyMissile;
+
+EnemyMissile.prototype.tick = function() {
+  if(this.trackingTime > 0) {
+    this.trackingTime--;
+    if(this.enemy.sprite.exists) {
+      this.sprite.rotation = game.physics.arcade.accelerateToObject(this.sprite, this.enemy.sprite, 5000, 600, 600);
+    }
+  }
+
+  game.physics.arcade.overlap(this.sprite, collectorSprites, function(self, enemy) {
+    var explosionAnimation = explosions.getFirstExists(false);
+
+    explosionAnimation.reset(self.x, self.y);
+    explosionAnimation.play('kaboom', 30, false, true);
+
+    self.exists = false;
+    // enemy.exists = false;   
+  });
+
+  game.physics.arcade.overlap(this.sprite, turretSprites, function(self, enemy) {
+    var explosionAnimation = explosions.getFirstExists(false);
+
+    explosionAnimation.reset(self.x, self.y);
+    explosionAnimation.play('kaboom', 30, false, true);
+
+    self.exists = false;
+    // enemy.exists = false;   
+  });
+};
+
