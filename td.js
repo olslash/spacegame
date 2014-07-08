@@ -4,12 +4,15 @@ var worldX = 2048, worldY = 2048;
 
 var collector_cost = 100;
 var collector_rate = 0.01;
+var turret_cost = 150;
 
 var total_res = 50;
 var resources = []; // all asteroids in the game world
 var resourceSprites = []; // all asteroid sprites, for collision checking
 
 var collectors = []; // all resource collectors placed in the game world
+
+var turrets = []; // all turrets placed in the game world
 
 var player;
 
@@ -34,6 +37,7 @@ var mouseDown = false;
 var mouseOverButton = false;
 
 var createCollectorButton;
+var createTurretButton;
 
 var signals = {
   mouseMarginLeft: new Phaser.Signal(),
@@ -91,7 +95,12 @@ function create() {
     
   },'BUILD COLLECTOR (' + collector_cost + ')');
 
-
+  createTurretButton = new Button('menu_bubble', screenX - 400, screenY - 50, function() {
+    if(player.spendRes(turret_cost)) {
+      turrets.push(new Turret('turret', 0, 0));
+    } 
+    
+  },'BUILD COLLECTOR (' + collector_cost + ')');
 
   // THROW IN SOME RESOURCES
   for (var i = total_res; i >= 0; i--) {
