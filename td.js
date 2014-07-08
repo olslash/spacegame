@@ -6,7 +6,7 @@ var collector_cost = 100;
 var collector_rate = 0.05;
 var turret_cost = 150;
 
-var total_res = 50;
+var total_res = 100;
 var resources = []; // all asteroids in the game world
 var resourceSprites = []; // all asteroid sprites, for collision checking
 
