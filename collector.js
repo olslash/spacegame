@@ -29,7 +29,6 @@ var Collector = function(sprite, x, y) {
     this.state = 1; // transition to working state
     this.sprite.inputEnabled = false;
     this.sprite.body.immovable = true;
-
     this.range.exists = false;
   });
 };
@@ -49,16 +48,22 @@ Collector.prototype.tick = function() {
       this.range.tint = 0x00ff00;
     }, null, this); 
 
-    // draw lines between me and asteroids in range
-    for(var i = resourceSprites.length - 1; i >= 0; i--) {
-      var resX = resourceSprites[i].x;
-      var resY = resourceSprites[i].y;
-      // console.log(line);
-      // var line = new Phaser.Line(this.sprite.x, this.sprite.y, resX, resY);
-    }
-
   } else if (this.state === 1) { //WORKING
-
+    // find the closest resource in state 0, within this.radius.
+    // 
+    // call mineRes on it, and update the player's resources.
+    // 
+    // I AM HERE. 
+  
+    for(var i = resources.length - 1; i >= 0; i--) {
+      if(resources[i].state === 0 
+        && game.physics.arcade.distanceBetween(this.sprite, resources[i].sprite) <= this.radius) {
+        // console.log(resources[i]);
+        player.addRes(resources[i].mineRes(collector_rate));
+        // console.log('mining from', resources[i]);
+      }
+      game.physics.arcade.distanceBetween(this.sprite, resources[0].sprite);
+    }
   }
 };
 

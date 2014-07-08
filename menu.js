@@ -12,7 +12,7 @@ var Button = function(sprite, x, y, action, text, show) {
   this._tweenSpeed = 200;
   if(show) { this.show(); }
 
-  this.text = game.add.text(x, y, text);
+  this.text = game.add.text(x, y - 24, text);
 
   //  Center align
   this.text.anchor.set(0.5);
@@ -95,18 +95,21 @@ Button.prototype.setInputOutListener = function(action) {
 
 Button.prototype.show = function() {
   this.sprite.exists = true;
+
   this.sprite.bringToTop();
   var tween = game.add.tween(this.sprite.scale).to({x: 1, y: 1}, this._tweenSpeed, Phaser.Easing.Quartic.In, true);
 
   tween.onComplete.add(function() {
-    
+    this.text.fontSize = 12;  
   }, this);
 };
 
 Button.prototype.hide = function() {
+
   var tween = game.add.tween(this.sprite.scale).to({x: 0, y: 0}, this._tweenSpeed, Phaser.Easing.Quartic.Out, true);
   tween.onComplete.add(function() {
     this.sprite.exists = false;
+    this.text.fontSize = 0;
   }, this);
 };
 

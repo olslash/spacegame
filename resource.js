@@ -1,3 +1,5 @@
+// state: 0: has res, 1: dead
+
 var Resource = function(x, y) {
 
   // create a random res amount
@@ -18,4 +20,29 @@ var Resource = function(x, y) {
   this.sprite.anchor.setTo(0.5, 0.5);
   game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
   this.sprite.body.immovable = true;
+
+  this.state = 0;
+};
+
+Resource.prototype.mineRes = function(amt) {
+  if(this.state === 0) {
+    if(this.res >= amt) {
+      this.res -= amt;
+      return amt;
+    } else {
+      amt = this.res;
+      this.res = 0;
+      this.state = 1;
+      this.sprite.tint = 0x000000;
+      return amt;
+    }
+  } else {
+    return false;
+  }
+};
+
+Resource.prototype.tick = function() {
+  // if(this.state === 0) { // has resources
+
+  // }
 };

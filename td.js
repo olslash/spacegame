@@ -2,11 +2,17 @@ var antialias = false;
 var screenX = 1020, screenY = 600;
 var worldX = 2048, worldY = 2048;
 
+var collector_cost = 100;
+var collector_rate = 0.01;
+
 var total_res = 50;
 var resources = []; // all asteroids in the game world
 var resourceSprites = []; // all asteroid sprites, for collision checking
 
 var collectors = []; // all resource collectors placed in the game world
+
+var player;
+
 
 var game = new Phaser.Game(screenX, screenY, Phaser.AUTO, 'game', {
   preload: preload,
@@ -57,16 +63,15 @@ function preload() {
 function create() {
   game.world.setBounds(0, 0, worldX, worldY);
   game.physics.startSystem(Phaser.Physics.ARCADE);
-
-
-
-
-
   setStage();
 
   // game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
   game.scale.fullScreenScaleMode = Phaser.ScaleManager.NO_SCALE;
   // game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
+
+  // ADD PLAYER OBJECT
+  player = new Player();
+
 
   // ADD PLAYER BASE
   mothership = game.add.sprite(worldX/2, worldY/2, 'mothership', 'mothership');
@@ -80,8 +85,13 @@ function create() {
   },'CENTER CAMERA');
 
   createCollectorButton = new Button('menu_bubble', screenX - 250, screenY - 50, function() {
-    collectors.push(new Collector('beacon', 0, 0));
-  },'BUILD COLLECTOR');
+    if(player.spendRes(collector_cost)) {
+      collectors.push(new Collector('beacon', 0, 0));
+    } 
+    
+  },'BUILD COLLECTOR (' + collector_cost + ')');
+
+
 
   // THROW IN SOME RESOURCES
   for (var i = total_res; i >= 0; i--) {
@@ -116,7 +126,6 @@ function create() {
   signals.mouseMarginBottom.add(moveCamera.down);
 }
 
-
 function update() {
   if(mouseDown && !mouseOverButton) { checkPointerAtScreenEdge(); } // check mouse for camera movement
 
@@ -124,9 +133,20 @@ function update() {
     // update every collector-
     collectors[i].tick();
   }
+
+  // update the player/hud
+  player.tick();
+
+  // update buttons based on current resources
+  if(player.checkRes() >= collector_cost && createCollectorButton.sprite.exists === false) {
+    createCollectorButton.show();
+  } else if (player.checkRes() < collector_cost && createCollectorButton.sprite.exists === true) {
+    createCollectorButton.hide();
+  }
+
 }
 
 function render() {
-  game.debug.cameraInfo(game.camera, 32, 32);
+  // game.debug.cameraInfo(game.camera, 32, 32);
   // game.debug.pointer(game.input.activePointer);
 }
