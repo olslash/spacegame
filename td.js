@@ -93,14 +93,13 @@ function create() {
       collectors.push(new Collector('beacon', 0, 0));
     } 
     
-  },'BUILD COLLECTOR (' + collector_cost + ')');
+  },'COLLECTOR (' + collector_cost + ')');
 
   createTurretButton = new Button('menu_bubble', screenX - 400, screenY - 50, function() {
     if(player.spendRes(turret_cost)) {
       turrets.push(new Turret('turret', 0, 0));
     } 
-    
-  },'BUILD COLLECTOR (' + collector_cost + ')');
+  },'TURRET (' + turret_cost + ')');
 
   // THROW IN SOME RESOURCES
   for (var i = total_res; i >= 0; i--) {
@@ -138,9 +137,14 @@ function create() {
 function update() {
   if(mouseDown && !mouseOverButton) { checkPointerAtScreenEdge(); } // check mouse for camera movement
 
+  // update every collector-
   for(var i = collectors.length - 1; i >= 0; i--) {
-    // update every collector-
     collectors[i].tick();
+  }
+
+  // update every turret-
+  for(var i = turrets.length - 1; i >= 0; i--) {
+    turrets[i].tick();
   }
 
   // update the player/hud
@@ -151,6 +155,12 @@ function update() {
     createCollectorButton.show();
   } else if (player.checkRes() < collector_cost && createCollectorButton.sprite.exists === true) {
     createCollectorButton.hide();
+  }
+
+  if(player.checkRes() >= turret_cost && createTurretButton.sprite.exists === false) {
+    createTurretButton.show();
+  } else if (player.checkRes() < turret_cost && createTurretButton.sprite.exists === true) {
+    createTurretButton.hide();
   }
 
 }
