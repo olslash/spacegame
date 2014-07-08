@@ -1,4 +1,4 @@
-var Resource = function(sprite, x, y) {
+var Resource = function(x, y) {
 
   // create a random res amount
   var res = Math.floor(Math.random() * 400);
@@ -17,4 +17,5 @@ var Resource = function(sprite, x, y) {
   this.sprite = game.add.sprite(x, y, sprite, 'resources');
   this.sprite.anchor.setTo(0.5, 0.5);
   game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+  this.sprite.body.immovable = true;
 };
