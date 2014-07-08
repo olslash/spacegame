@@ -6,7 +6,7 @@ var Enemy = function(sprite, x, y) {
   game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
   
   this.gunrange = 400; // gun range
-  this.fireRate = 40; // divide by ~60 for time in seconds
+  this.fireRate = 100; // divide by ~60 for time in seconds
   this.lastFire = 0;
 
   this.range = new Phaser.Circle(this.sprite.x, this.sprite.y, this.gunrange);

@@ -56,20 +56,20 @@ EnemyMissile.prototype.tick = function() {
   }
 
   game.physics.arcade.overlap(this.sprite, collectorSprites, function(self, enemy) {
-    var explosionAnimation = explosions.getFirstExists(false);
+    var explosionAnimation = explosions_enemy.getFirstExists(false);
 
     explosionAnimation.reset(self.x, self.y);
-    explosionAnimation.play('kaboom', 30, false, true);
+    explosionAnimation.play('kaboom_enemy', 30, false, true);
 
     self.exists = false;
     // enemy.exists = false;   
   });
 
   game.physics.arcade.overlap(this.sprite, turretSprites, function(self, enemy) {
-    var explosionAnimation = explosions.getFirstExists(false);
+    var explosionAnimation = explosions_enemy.getFirstExists(false);
 
     explosionAnimation.reset(self.x, self.y);
-    explosionAnimation.play('kaboom', 30, false, true);
+    explosionAnimation.play('kaboom_enemy', 30, false, true);
 
     self.exists = false;
     // enemy.exists = false;   

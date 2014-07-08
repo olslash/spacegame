@@ -58,9 +58,12 @@ Turret.prototype.tick = function() {
         if(this.range.contains(enemies[i].sprite.x, enemies[i].sprite.y)) {
           // turn the gun towards that enemy
           // TODO: why does the gun point at a different enemy than I fire at?
+          // choose ONE enemy and only use it
           var gunAngle = game.physics.arcade.angleBetween(this.sprite, enemies[i].sprite);
+          console.log(enemies[i]);
           this.gun.rotation = gunAngle + (0.5 * Math.PI); // 90 degree offset
           this.launchMissile(enemies[i]);
+          break;
         }
       }
     }
