@@ -21,15 +21,22 @@ var Collector = function(sprite, x, y) {
   game.physics.enable(this.range, Phaser.Physics.ARCADE);
   this.range.body.immovable = true;
   this.range.tint = 0x00ff00;
+  this.validPosition = false;
 
   this.setInputDownListener(function() {
     // on click, during placing, unit is placed.
-    this.sprite.events.onInputDown = null;
+    if(!this.validPosition) {
+      // if I'm not in a valid placement zone
+      console.log('cant place');
+    } else {
+      this.sprite.events.onInputDown = null;
 
-    this.state = 1; // transition to working state
-    this.sprite.inputEnabled = false;
-    this.sprite.body.immovable = true;
-    this.range.exists = false;
+      this.state = 1; // transition to working state
+      this.sprite.inputEnabled = false;
+      this.sprite.body.immovable = true;
+      this.range.exists = false;  
+    }
+    
   });
 };
 
@@ -43,8 +50,10 @@ Collector.prototype.tick = function() {
     this.range.y = game.input.worldY;
 
     // if i'm being placed, i should be checking for asteroids in range.
-    this.range.tint = 0xff0000; 
+    this.range.tint = 0xff0000;
+    this.validPosition = false; 
     game.physics.arcade.overlap(this.range, resourceSprites, function(){
+      this.validPosition = true;
       this.range.tint = 0x00ff00;
     }, null, this); 
 
@@ -76,19 +85,3 @@ Collector.prototype.setInputDownListener = function(action) {
     
   }, this);
 };
-// game.physics.arcade.overlap(enemy1.base, tower1.radius, function(){
-//     console.log('overlap!');
-//   }, null, this);
-
-// overlap(object1, object2, overlapCallback, processCallback, callbackContext) → {boolean}
-
-// Checks for overlaps between two game objects. The objects can be Sprites, Groups or Emitters. You can perform Sprite vs. Sprite, Sprite vs. Group and Group vs. Group overlap checks. Unlike collide the objects are NOT automatically separated or have any physics applied, they merely test for overlap results. The second parameter can be an array of objects, of differing types.
-
-// during placement, on each tick, we need to check overlap between this tower, the objects in the resources array,
-// any other towers, and any relays.
-
-// collector needs a state machine for 
-// 1: placing
-// // physics enabled. checking overlaps as described above.
-// 2: working
-// // physics disabled. collecting from res in range.
