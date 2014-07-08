@@ -19,7 +19,7 @@ var missiles = []; // all missiles fired in the game world
 var enemies = []; // all enemies placed in the game world
 var enemySprites = []; // all enemy sprites, for collision checking
 
-var time_between_enemy_waves = 3000;
+var time_between_enemy_waves = 1000;
 var enemies_per_wave = 1;
 
 var waveTimerSet = true; // do we currently have a setTimeout running for waves?
@@ -217,7 +217,27 @@ function update() {
     waveTimerSet = true;
     window.setTimeout(function() {
       for(var i = enemies_per_wave - 1; i >= 0; i--) {
-        enemies.push(new Enemy('enemy', 0,0));
+        // generate an off-screen position
+        // pick whether to spawn off an x or yedge
+        var x, y;
+        var vertOrHoriz = Math.round(Math.random());
+        if(vertOrHoriz === 0) {
+          // vertical
+          // x is anywhere
+          x = Math.random() * worldX;
+          //y is either off the top or off the bottom, depending on the random
+          // -100 is off the top because up is negative on the y axis.
+          y = Math.round(Math.random()) > 0 ? -worldY - 100 : 100;
+
+        } else if (vertOrHoriz === 1) {
+          // horizontal
+          // y is anywhere
+          y = Math.random() * worldX;
+          //y is either off the top or off the bottom, depending on the random
+          x = Math.round(Math.random()) > 0 ? worldX + 100 : -100;
+        }
+
+        enemies.push(new Enemy('enemy', x, y));
         // console.log('spawning an enemy');
         waveTimerSet = false;
       }
@@ -232,7 +252,7 @@ function update() {
   // update every missile (enemy tracking)
   for (var i = missiles.length - 1; i >= 0; i--) {
     missiles[i].tick();
-  };
+  }
   
 
 }
