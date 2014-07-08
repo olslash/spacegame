@@ -1,4 +1,4 @@
-var antialias = false;
+var antialias = true;
 var screenX = 1020, screenY = 600;
 var worldX = 2048, worldY = 2048;
 
@@ -118,18 +118,18 @@ function create() {
   centerCameraOnSprite(mothership);
 
   // ADD MENUS
-  var centerCamera = new Button('menu_bubble', screenX - 100, screenY - 50, function() {
+  var centerCamera = new Button('menu_bubble',  100, screenY - 50, function() {
     centerCameraOnSprite(mothership);
   },'CENTER CAMERA');
 
-  createCollectorButton = new Button('menu_bubble', screenX - 250, screenY - 50, function() {
+  createCollectorButton = new Button('menu_bubble', screenX - 100, screenY - 50, function() {
     if(player.spendRes(collector_cost)) {
       collectors.push(new Collector('beacon', 0, 0));
     } 
     
   },'COLLECTOR (' + collector_cost + ')');
 
-  createTurretButton = new Button('menu_bubble', screenX - 400, screenY - 50, function() {
+  createTurretButton = new Button('menu_bubble', screenX - 250, screenY - 50, function() {
     if(player.spendRes(turret_cost)) {
       turrets.push(new Turret('turret', 0, 0));
     } 
@@ -291,7 +291,8 @@ function update() {
     missiles[i].tick();
   }
   
-
+  // rotate the mothership
+  mothership.rotation = game.math.wrapAngle(mothership.rotation + 0.001, true);
 }
 
 function render() {
