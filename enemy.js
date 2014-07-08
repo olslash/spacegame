@@ -61,5 +61,9 @@ Enemy.prototype.chooseTarget = function() {
 Enemy.prototype.tick = function() {
   // accelerate towards this.target
   // accelerateToObject(displayObject, destination, speed, xSpeedMax, ySpeedMax)
-  this.sprite.rotation = game.physics.arcade.accelerateToObject(this.sprite, this.target.sprite, 150, 200, 200);
+  this.sprite.rotation = 
+  game.physics.arcade.accelerateToObject(this.sprite, this.target.sprite, 50, 100, 100) 
+  - (0.5 * Math.PI); // rotate 90 degrees to face.
+
+  // todo: fire misiles at the target.
 };

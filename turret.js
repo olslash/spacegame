@@ -1,7 +1,7 @@
 // a Turret is a tower that defends from enemies
 // STATES: 0: placing, 1: working
 var Turret = function(sprite, x, y) {
-  this.range = 1000; // gun range
+  this.range = 500; // gun range
   this.fireRate = 40; // divide by ~60 for time in seconds
   this.lastFire = 0;
 
@@ -29,7 +29,7 @@ var Turret = function(sprite, x, y) {
     this.gun.anchor.setTo(0.5, 0.8);
     this.gun.scale.setTo(0.75, 0.75);
 
-    this.gun.exists = false;
+    // this.gun.exists = false;
 
     this.range = new Phaser.Circle(this.sprite.x, this.sprite.y, this.range);
 
@@ -53,11 +53,13 @@ Turret.prototype.tick = function() {
     this.lastFire++; // fire rate
     // which enemies are in my range?
     for(var i = enemies.length - 1; i >= 0; i--) {
-      if(this.range.contains(enemies[i].sprite.x, enemies[i].sprite.y)) {
-        // turn the gun towards that enemy
-        var gunAngle = game.physics.arcade.angleBetween(this.sprite, enemies[i].sprite);
-        this.gun.rotation = gunAngle + (0.5 * Math.PI); // 90 degree offset
-        this.launchMissile(enemies[i]);
+      if(enemies[i].sprite.exists === true) {
+        if(this.range.contains(enemies[i].sprite.x, enemies[i].sprite.y)) {
+          // turn the gun towards that enemy
+          var gunAngle = game.physics.arcade.angleBetween(this.sprite, enemies[i].sprite);
+          this.gun.rotation = gunAngle + (0.5 * Math.PI); // 90 degree offset
+          this.launchMissile(enemies[i]);
+        }
       }
     }
   }

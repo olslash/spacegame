@@ -16,7 +16,7 @@ Missile.prototype.launch = function(enemy) {
   this.trackingTime = 120; // divide by ~60 for seconds
   // this.sprite.rotation = game.physics.arcade.moveToObject(this.sprite, this.enemy.sprite, 400);
   this.sprite.rotation = game.physics.arcade.accelerateToObject(this.sprite, this.enemy.sprite, 600, 800, 800);
-  // todo: can this use acceleration instead?
+  //todo: these need better accuracy -- back to moveto?
 };
 
 
@@ -27,7 +27,7 @@ Missile.prototype.tick = function() {
   }
 
   game.physics.arcade.overlap(this.sprite, enemySprites, function(self, enemy) {
-    // todo: explosion -- destroy method on enemy
+    // todo: explosion!
     self.exists = false;
     enemy.exists = false;
   });
